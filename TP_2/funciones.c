@@ -8,6 +8,13 @@
 static int obtenerEspacioLibre(EPersona* personas, int limite);
 static int proximoId(void);
 
+/** \brief Inicializa la estructura
+ *
+ * \param personas EPersona* Estructura que representa persona
+ * \param limite int cantidad maxima de items en la estructura.
+ * \return int [-1] Error [0] Ok
+ *
+ */
 int persona_init(EPersona* personas,int limite)
 {
     int retorno = -1;
@@ -22,7 +29,13 @@ int persona_init(EPersona* personas,int limite)
     }
     return retorno;
 }
-//Usada
+/** \brief Muestra los campos de la estructura para cada persona
+ *
+ * \param personas EPersona* Estructura que representa persona.
+ * \param limite int cantidad maxima de items en la estructura.
+ * \return int [-1] Error [0] Ok.
+ *
+ */
 int persona_mostrar(EPersona* personas,int limite)
 {
     int retorno = -1;
@@ -38,7 +51,13 @@ int persona_mostrar(EPersona* personas,int limite)
     }
     return retorno;
 }
-
+/** \brief Muestra los campos de la estructura para las personas ingresadas empezando por el nombre.
+ *
+ * \param personas EPersona* Estructura que representa persona.
+ * \param limite int cantidad maxima de items en la estructura.
+ * \return int [-1] Error [0] Ok.
+ *
+ */
 int persona_mostrarPorNombre(EPersona* personas,int limite)
 {
     int retorno = -1;
@@ -54,7 +73,13 @@ int persona_mostrarPorNombre(EPersona* personas,int limite)
     }
     return retorno;
 }
-
+/** \brief Dá de alta las personas
+ *
+ * \param personas EPersona* Estructura que representa persona.
+ * \param limite int cantidad maxima de items en la estructura.
+ * \return int [-1] Error [0] Ok.
+ *
+ */
 int persona_alta(EPersona* personas,int limite)
 {
     int retorno = -1;
@@ -96,7 +121,14 @@ int persona_alta(EPersona* personas,int limite)
     }
     return retorno;
 }
-
+/** \brief Dá de baja a las personas con el DNI
+ *
+ * \param personas EPersona* Estructura que representa persona.
+ * \param limite int cantidad maxima de items en la estructura.
+ * \param dniABorrar int recibe el DNI a ser borrado.
+ * \return int [-1] Error [0] Ok.
+ *
+ */
 int persona_baja(EPersona* personas,int limite, int dniABorrar)
 {
     int retorno = -1;
@@ -116,7 +148,14 @@ int persona_baja(EPersona* personas,int limite, int dniABorrar)
     }
     return retorno;
 }
-
+/** \brief Ordena los array de la estructura por nombre
+ *
+ * \param personas EPersona* Estructura que representa persona.
+ * \param limite int cantidad maxima de items en la estructura.
+ * \param orden int [1] ordena de menor a mayor, [0] de mayor a menor.
+ * \return int [-1] Error [0] Ok.
+ *
+ */
 int persona_ordenarPorNombre(EPersona* personas,int limite, int orden)
 {
     int retorno = -1;
@@ -146,7 +185,13 @@ int persona_ordenarPorNombre(EPersona* personas,int limite, int orden)
     }
     return retorno;
 }
-
+/** \brief Busca los espacios libres en el array de la estructura
+ *
+ * \param personas EPersona* Estructura que representa persona.
+ * \param limite int cantidad maxima de items en la estructura.
+ * \return int [-1] Error [0] Ok.
+ *
+ */
 static int obtenerEspacioLibre(EPersona* personas, int limite)
 {
     int retorno = -1;
@@ -164,14 +209,27 @@ static int obtenerEspacioLibre(EPersona* personas, int limite)
     }
     return retorno;
 }
-
+/** \brief Incrementa el Id
+ *
+ * \return int devuelve el valor del Id que va a ser usado en el próximo alta.
+ *
+ */
 static int proximoId()
 {
     static int proximoId = -1;
     proximoId++;
     return proximoId;
 }
-
+/** \brief Fuerza el alta de las personas (para probar el código)
+ *
+ * \param personas EPersona* Estructura que representa persona.
+ * \param limite int cantidad maxima de items en la estructura.
+ * \param auxNombre char* recibe el nombre a forzar
+ * \param auxEdad int recibe la edad a forzar
+ * \param auxDni intrecibe el DNI a forzar
+ * \return int [-1] Error [0] Ok.
+ *
+ */
 int persona_altaForzada(EPersona* personas,int limite,char* auxNombre,int auxEdad, int auxDni)
 {
 
@@ -194,9 +252,16 @@ int persona_altaForzada(EPersona* personas,int limite,char* auxNombre,int auxEda
     }
     return retorno;
 }
-
+/** \brief Imprime por consola un grafico de barras por edad
+ *
+ * \param persona EPersona* Estructura que representa persona.
+ * \param limite int cantidad maxima de items en la estructura.
+ * \return int [-1] Error [0] Ok.
+ *
+ */
 int imprimir_grafico(EPersona* persona, int limite)
 {
+    fflush(stdin);
     int retorno = -1;
     int i;
     int j;

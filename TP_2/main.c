@@ -14,27 +14,6 @@ int main()
 
     persona_init(persona,QTY);
 
-    persona_altaForzada(persona,QTY,"Nico",12,31822382);
-    persona_altaForzada(persona,QTY,"Dani",10,33785425);
-    persona_altaForzada(persona,QTY,"Cacho",15,00000012);
-    persona_altaForzada(persona,QTY,"Soleda",32,31822382);
-    persona_altaForzada(persona,QTY,"Sol",25,31822382);
-    persona_altaForzada(persona,QTY,"Nico",28,31822382);
-    persona_altaForzada(persona,QTY,"Dani",19,33785425);
-    persona_altaForzada(persona,QTY,"Cacho",84,00000012);
-    persona_altaForzada(persona,QTY,"Soleda",45,31822382);
-    persona_altaForzada(persona,QTY,"Sol",55,31822382);
-    persona_altaForzada(persona,QTY,"Nico",12,31822382);
-    persona_altaForzada(persona,QTY,"Dani",10,33785425);
-    persona_altaForzada(persona,QTY,"Cacho",15,00000012);
-    persona_altaForzada(persona,QTY,"Soleda",32,31822382);
-    persona_altaForzada(persona,QTY,"Sol",25,31822382);
-    persona_altaForzada(persona,QTY,"Nico",28,31822382);
-    persona_altaForzada(persona,QTY,"Dani",19,33785425);
-    persona_altaForzada(persona,QTY,"Cacho",84,00000012);
-    persona_altaForzada(persona,QTY,"Soleda",45,31822382);
-    persona_altaForzada(persona,QTY,"Sol",55,31822382);
-
     while(seguir=='s')
     {
         printf("1- Agregar persona\n");
@@ -52,7 +31,7 @@ int main()
                 break;
             case 2:
                 persona_mostrar(persona,QTY);
-                getValidInt("Ingrese DNI de la persona a borrar: ","Ese no es un DNI valido", &auxDNI,00000001,99999999,1);
+                getValidInt("\nIngrese DNI de la persona a borrar: ","Ese no es un DNI valido", &auxDNI,00000001,99999999,1);
                 persona_baja(persona,QTY,auxDNI);
                 break;
             case 3:
