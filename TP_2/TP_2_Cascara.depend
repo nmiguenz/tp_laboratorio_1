@@ -1,0 +1,51 @@
+# depslib dependency file v1.0
+1525541459 source:/home/nmiguenz/Escritorio/Programacion_laboratorio_I/TP2 - FECHA -- 11 - 5 -2018/TP_2_Cascara/funciones.c
+	<stdio.h>
+	<stdlib.h>
+	<time.h>
+	<string.h>
+	"funciones.h"
+	"utn.h"
+
+1525547686 /home/nmiguenz/Escritorio/Programacion_laboratorio_I/TP2 - FECHA -- 11 - 5 -2018/TP_2_Cascara/funciones.h
+
+1525536218 /home/nmiguenz/Escritorio/Programacion_laboratorio_I/TP2 - FECHA -- 11 - 5 -2018/TP_2_Cascara/utn.h
+
+1525536078 source:/home/nmiguenz/Escritorio/Programacion_laboratorio_I/TP2 - FECHA -- 11 - 5 -2018/TP_2_Cascara/utn.c
+	<stdio.h>
+	<stdlib.h>
+	<time.h>
+	<string.h>
+	"utn.h"
+
+1525541563 source:/home/nmiguenz/Escritorio/Programacion_laboratorio_I/TP2 - FECHA -- 11 - 5 -2018/TP_2_Cascara/main.c
+	<stdio.h>
+	<stdlib.h>
+	"funciones.h"
+	"utn.h"
+
+1525536078 source:/home/nmiguenz/Escritorio/Programacion_laboratorio_I/TP2 - FECHA -- 11 - 5 -2018/TP_2/utn.c
+	<stdio.h>
+	<stdlib.h>
+	<time.h>
+	<string.h>
+	"utn.h"
+
+1525536218 /home/nmiguenz/Escritorio/Programacion_laboratorio_I/TP2 - FECHA -- 11 - 5 -2018/TP_2/utn.h
+
+1525829411 source:/home/nmiguenz/Escritorio/Programacion_laboratorio_I/TP2 - FECHA -- 11 - 5 -2018/TP_2/main.c
+	<stdio.h>
+	<stdlib.h>
+	"funciones.h"
+	"utn.h"
+
+1525828972 /home/nmiguenz/Escritorio/Programacion_laboratorio_I/TP2 - FECHA -- 11 - 5 -2018/TP_2/funciones.h
+
+1525829056 source:/home/nmiguenz/Escritorio/Programacion_laboratorio_I/TP2 - FECHA -- 11 - 5 -2018/TP_2/funciones.c
+	<stdio.h>
+	<stdlib.h>
+	<time.h>
+	<string.h>
+	"funciones.h"
+	"utn.h"
+
