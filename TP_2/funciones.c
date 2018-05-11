@@ -261,39 +261,46 @@ int persona_altaForzada(EPersona* personas,int limite,char* auxNombre,int auxEda
  */
 int imprimir_grafico(EPersona* persona, int limite)
 {
-    fflush(stdin);
+
     int retorno = -1;
     int i;
     int j;
-    int contadorMenores=0;
-    int contadorIntermedio=0;
-    int contadorMayores=0;
-    int maximoAsterisco=0;
+    int contadorMenores= 0;
+    int contadorIntermedio= 0;
+    int contadorMayores= 0;
+    int maximoAsterisco= 0;
 
-    char imprimirPosiciones[3];
+    int imprimirPosiciones[3];
 
-    for (i=0;i<limite;i++)
+    if (limite>0 && persona !=NULL)
     {
-        if(persona[i].edad>0 && persona[i].edad<=18)
-            contadorMenores++;
+        for (i=0;i<limite;i++)
+        {
+            if (!persona[i].isEmpty)
+            {
+                if(persona[i].edad>0 && persona[i].edad<=18)
+                    contadorMenores++;
 
-        else if(persona[i].edad>18 && persona[i].edad<=35)
-            contadorIntermedio++;
+                else if(persona[i].edad>18 && persona[i].edad<=35)
+                    contadorIntermedio++;
 
-        else
-            contadorMayores++;
+                else
+                    contadorMayores++;
+            }
+
+        }
     }
 
     imprimirPosiciones[0]=contadorMenores;
     imprimirPosiciones[1]=contadorIntermedio;
     imprimirPosiciones[2]=contadorMayores;
 
-    for (i=0;i<2;i++)
+    for (i=0;i<3;i++)
     {
+
         if (imprimirPosiciones[i]>maximoAsterisco)
-        {
             maximoAsterisco = imprimirPosiciones[i];
-        }
+
     }
     for (i=maximoAsterisco;i>0;i--)
     {

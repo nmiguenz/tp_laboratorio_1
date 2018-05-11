@@ -13,7 +13,28 @@ int main()
     EPersona persona[QTY];
 
     persona_init(persona,QTY);
-
+/*
+    persona_altaForzada(persona,QTY,"Adrian",12,40132458);
+    persona_altaForzada(persona,QTY,"Marta",13,30132458);
+    persona_altaForzada(persona,QTY,"Matias",5,40152458);
+    persona_altaForzada(persona,QTY,"Jose",17,40142458);
+    persona_altaForzada(persona,QTY,"Coti",29,40132958);
+    persona_altaForzada(persona,QTY,"Lau",54,10132458);
+    persona_altaForzada(persona,QTY,"Gonza",35,13132458);
+    persona_altaForzada(persona,QTY,"Ernest",37,40132458);
+    persona_altaForzada(persona,QTY,"Adrian",42,31132458);
+    persona_altaForzada(persona,QTY,"Adrian",12,40154458);
+    persona_altaForzada(persona,QTY,"Adrian",8,40952458);
+    persona_altaForzada(persona,QTY,"Adrian",81,40132458);
+    persona_altaForzada(persona,QTY,"Sofi",79,40132478);
+    persona_altaForzada(persona,QTY,"Adrian",12,27132458);
+    persona_altaForzada(persona,QTY,"Adrian",15,99132458);
+    persona_altaForzada(persona,QTY,"Dani",12,40132458);
+    persona_altaForzada(persona,QTY,"Adrian",65,14132458);
+    persona_altaForzada(persona,QTY,"Nico",12,40542458);
+    persona_altaForzada(persona,QTY,"Adrian",12,30132458);
+    persona_altaForzada(persona,QTY,"Lucas",49,20132458);
+*/
     while(seguir=='s')
     {
         printf("1- Agregar persona\n");
