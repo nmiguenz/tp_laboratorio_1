@@ -1,0 +1,33 @@
+# depslib dependency file v1.0
+1529861752 source:/home/nmiguenz/Escritorio/TP3-4 PARCIAL 2/NICO/TP3/TP_3_Cascara/funciones.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"funciones.h"
+
+1530323197 /home/nmiguenz/Escritorio/TP3-4 PARCIAL 2/NICO/TP3/TP_3_Cascara/movie.h
+
+1530323344 source:/home/nmiguenz/Escritorio/TP3-4 PARCIAL 2/NICO/TP3/TP_3_Cascara/main.c
+	<stdio.h>
+	<stdlib.h>
+	"movie.h"
+	"utn.h"
+
+1529861752 /home/nmiguenz/Escritorio/TP3-4 PARCIAL 2/NICO/TP3/TP_3_Cascara/funciones.h
+
+1530321748 /home/nmiguenz/Escritorio/TP3-4 PARCIAL 2/NICO/TP3/TP_3_Cascara/utn.h
+
+1530298726 source:/home/nmiguenz/Escritorio/TP3-4 PARCIAL 2/NICO/TP3/TP_3_Cascara/movie.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"movie.h"
+	"utn.h"
+
+1530321706 source:/home/nmiguenz/Escritorio/TP3-4 PARCIAL 2/NICO/TP3/TP_3_Cascara/utn.c
+	<stdio.h>
+	<stdlib.h>
+	<time.h>
+	<string.h>
+	"utn.h"
+
