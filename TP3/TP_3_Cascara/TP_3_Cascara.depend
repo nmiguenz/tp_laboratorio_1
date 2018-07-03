@@ -5,9 +5,9 @@
 	<string.h>
 	"funciones.h"
 
-1530323197 /home/nmiguenz/Escritorio/TP3-4 PARCIAL 2/NICO/TP3/TP_3_Cascara/movie.h
+1530592878 /home/nmiguenz/Escritorio/TP3-4 PARCIAL 2/NICO/TP3/TP_3_Cascara/movie.h
 
-1530323344 source:/home/nmiguenz/Escritorio/TP3-4 PARCIAL 2/NICO/TP3/TP_3_Cascara/main.c
+1530588752 source:/home/nmiguenz/Escritorio/TP3-4 PARCIAL 2/NICO/TP3/TP_3_Cascara/main.c
 	<stdio.h>
 	<stdlib.h>
 	"movie.h"
@@ -17,7 +17,7 @@
 
 1530321748 /home/nmiguenz/Escritorio/TP3-4 PARCIAL 2/NICO/TP3/TP_3_Cascara/utn.h
 
-1530298726 source:/home/nmiguenz/Escritorio/TP3-4 PARCIAL 2/NICO/TP3/TP_3_Cascara/movie.c
+1530588735 source:/home/nmiguenz/Escritorio/TP3-4 PARCIAL 2/NICO/TP3/TP_3_Cascara/movie.c
 	<stdio.h>
 	<stdlib.h>
 	<string.h>

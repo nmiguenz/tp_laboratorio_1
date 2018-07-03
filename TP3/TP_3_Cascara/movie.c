@@ -19,11 +19,25 @@ EMovie* movie_new(void)
     return returnAux;
 }
 
-
-EMovie* movie_newParameters(char* titulo, char* genero, int duracion, char* descripcion, float puntaje, char* linkImagen)
+int movie_delete(EMovie* this)
 {
+    if(this != NULL)
+    {
+        free(this);
+        return 0;
+    }
+    return -1;
+}
+
+EMovie* movie_newParameters(char* stringId, char* titulo, char* genero, int duracion, char* descripcion, float puntaje, char* linkImagen)
+{
+    int id;
     EMovie* this = movie_new();
-    if( !movie_setTitulo(this, titulo) &&
+
+    id = atoi(stringId);
+
+    if( !movie_setId(this, id) &&
+        !movie_setTitulo(this, titulo) &&
         !movie_setGenero(this, genero) &&
         !movie_setDuracion(this, duracion) &&
         !movie_setDescripcion(this, descripcion) &&
@@ -36,22 +50,12 @@ EMovie* movie_newParameters(char* titulo, char* genero, int duracion, char* desc
     return NULL;
 }
 
-
-int movie_delete(EMovie* this)
-{
-    if(this != NULL)
-    {
-        free(this);
-        return 0;
-    }
-    return -1;
-}
-
-
-int movie_save(EMovie* this)
+int movie_guardar(EMovie* this)
 {
     FILE *pFile;
-    if((pFile=fopen("movies.dat","ab")) != NULL && this != NULL)
+    pFile=fopen("movies.dat","ab");
+
+    if(pFile != NULL && this != NULL)
     {
         fwrite(this,sizeof(EMovie),1,pFile);
         fclose(pFile);
@@ -60,40 +64,47 @@ int movie_save(EMovie* this)
     return -1;
 }
 
-
-int movie_saveArray(EMovie** this, int cantActual)
+int movie_escribirArchivo(EMovie** this, int cantidadActual)
 {
     int i;
     FILE *pFile;
-    if((pFile=fopen("movies.dat","wb")) != NULL && this != NULL)
+    pFile=fopen("movies.dat","wb");
+
+    if(pFile != NULL && this != NULL)
     {
-        for(i=0; i<cantActual; i++)
+        for(i=0; i<cantidadActual; i++)
+        {
             if(*(this+i) != NULL)
+            {
                 fwrite(*(this+i),sizeof(EMovie),1,pFile);
+            }
+        }
         fclose(pFile);
         return 0;
     }
     return -1;
 }
 
-
-int movie_read(EMovie** this, int* cantActual, int cantMaxima)
+int movie_read(EMovie** this, int* cantidadActual, int cantidadMaxima)
 {
     int r, i=0;
-    *cantActual=0;
+    *cantidadActual=0;
     FILE* pFile;
-    if((pFile=fopen("movies.dat","rb")) != NULL && this != NULL)
+    pFile=fopen("movies.dat","rb");
+
+    if(pFile != NULL && this != NULL)
     {
         while(!feof(pFile))
         {
             *(this+i) = movie_new();
             r = fread(*(this+i),sizeof(EMovie),1,pFile);
-            if((*cantActual) == cantMaxima || r != 1)
+            if((*cantidadActual) == cantidadMaxima || r != 1)
             {
                 movie_delete(*(this+i));
                 break;
             }
-            (*cantActual)++;
+
+            (*cantidadActual)++;
             i++;
         }
         fclose(pFile);
@@ -102,121 +113,47 @@ int movie_read(EMovie** this, int* cantActual, int cantMaxima)
     return -1;
 }
 
-
-//------------------------------------------------------------------------------------------------------------
-
-
-int movie_alta(EMovie** this, int* cantActual, int cantMaxima)
+int movie_alta(EMovie** this, int* cantidadActual, int cantidadMaxima)
 {
+    int id;
     char titulo[4096];
     char genero[4096];
     int duracion;
     char descripcion[4096];
     float puntaje;
     char linkImagen[4096];
-    if((*cantActual) < cantMaxima && this != NULL)
+    if((*cantidadActual) < cantidadMaxima && this != NULL)
     {
-        if( !getValidStringAlfaNumerico("\nTitulo: ","","",titulo,50,1) &&
-            movie_getByTitulo(this, (*cantActual), titulo) == -1 &&
-            !getValidString("\nGenero: ","","",genero,21,1) &&
-            !getValidInt("\nDuracion: ","",&duracion,60,1000,1) &&
-            !getValidDescripcion("\nDescripcion: ","",descripcion,750,1) &&
-            !getValidFloat("\nPuntaje[1-10]: ","",&puntaje,1,10,1) &&
-            !getValidLink("\nLink de la img: ","","",linkImagen,201,1))
+        if( !getValidStringAlfaNumerico("\nTitulo: ","\nNo es un titulo válido","\nEl titulo supera la cantidad de caracteres",titulo,50,1) &&
+            !getValidString("\nGenero: ","\nNo es un genero valido","\nNo se acepta esa cantidad de caracteres",genero,21,1) &&
+            !getValidInt("\nDuracion: ","\nNo es una duracion valida[10-1000]",&duracion,10,1000,1) &&
+            !getValidDescripcion("\nDescripcion: ","\nNo es una descripcion valida",descripcion,750,1) &&
+            !getValidFloat("\nPuntaje[1-10]: ","\nNo es un puntaje valido",&puntaje,1,10,1) &&
+            !getValidLink("\nLink foto: ","\nNo es un link valido","\nEl link tiene una extension que supera la permitida",linkImagen,300,1))
         {
-            *(this + (*cantActual)) = movie_newParameters(titulo,genero,duracion,descripcion,puntaje,linkImagen);
-            movie_save(*(this + (*cantActual)));
-            (*cantActual)++;
-            printf("\nPelicula agregada\n");
+
+            *(this + (*cantidadActual)) = movie_newParameters(id,titulo,genero,duracion,descripcion,puntaje,linkImagen);
+            movie_guardar(*(this + (*cantidadActual)));
+
+            (*cantidadActual)++;
+
+            printf("\nPelicula agregada con exito\n");
             return 0;
         }
         else
         {
-            printf("\nError, datos ingresados incorrectamente\n");
+            printf("\nError, datos ingresados de manera erronea\n");
             return -2;
         }
     }
-    printf("\nError, no hay espacio para mas peliculas\n");
+    printf("\nError\n");
     return -1;
 }
 
-
-int movie_modificacion(EMovie** this, int cantActual, char* titulo)
+int movie_mostrar(EMovie** this, int cantidadActual)
 {
     int i;
-    char newTitulo[4096];
-    char newGenero[4096];
-    int newDuracion;
-    char newDescripcion[4096];
-    float newPuntaje;
-    char newLinkImagen[4096];
-    if(this != NULL)
-    {
-        i = movie_getByTitulo(this, cantActual, titulo);
-        if(i != -1)
-        {
-            if( !getValidStringAlfaNumerico("\nTitulo: ","","",newTitulo,50,1) &&
-            movie_getByTitulo(this, cantActual, newTitulo) == -1 &&
-            !getValidString("\nGenero: ","","",newGenero,21,1) &&
-            !getValidInt("\nDuracion: ","",&newDuracion,60,1000,1) &&
-            !getValidDescripcion("\nDescripcion: ","",newDescripcion,750,1) &&
-            !getValidFloat("\nPuntaje[1-10]: ","",&newPuntaje,1,10,1) &&
-            !getValidLink("\nLink de la img: ","","",newLinkImagen,201,1))
-            {
-                if( !movie_setTitulo(*(this + i), newTitulo) &&
-                !movie_setGenero(*(this + i), newGenero) &&
-                !movie_setDuracion(*(this + i), newDuracion) &&
-                !movie_setDescripcion(*(this + i), newDescripcion) &&
-                !movie_setPuntaje(*(this + i), newPuntaje) &&
-                !movie_setLinkImagen(*(this + i), newLinkImagen))
-                {
-                    movie_saveArray(this, cantActual);
-                    printf("\nPelicula modificada\n");
-                    return 0;
-                }
-            }
-            else
-            {
-                printf("\nError, datos ingresados incorrectamente\n");
-                return -2;
-            }
-        }
-        else
-        {
-            printf("\nError, pelicula no existe\n");
-            return -2;
-        }
-    }
-    return -1;
-}
-
-
-int movie_baja(EMovie** this, int cantActual, char* titulo)
-{
-    int i;
-    if(this != NULL)
-    {
-        i = movie_getByTitulo(this, cantActual, titulo);
-        if(i != -1)
-        {
-            *(this + i) = NULL;
-            movie_saveArray(this, cantActual);
-            printf("\nPelicula eliminada\n");
-            return 0;
-        }
-        else
-        {
-            printf("\nError, pelicula no existe\n");
-            return -2;
-        }
-    }
-    return -1;
-}
-
-
-int movie_mostrar(EMovie** this, int cantActual)
-{
-    int i;
+    int id;
     char titulo[4096];
     char genero[4096];
     int duracion;
@@ -225,18 +162,14 @@ int movie_mostrar(EMovie** this, int cantActual)
     char linkImagen[4096];
     if(this != NULL)
     {
-        for(i=0; i<cantActual; i++)
+        for(i=0; i<cantidadActual; i++)
         {
-            if((*(this+i))!=NULL &&
-               !movie_getTitulo(*(this+i),titulo) &&
-               !movie_getGenero(*(this+i),genero) &&
-               !movie_getDuracion(*(this+i),&duracion) &&
-               !movie_getDescripcion(*(this+i),descripcion) &&
-               !movie_getPuntaje(*(this+i),&puntaje) &&
-               !movie_getLinkImagen(*(this+i),linkImagen))
+            if((*(this+i))!=NULL && !movie_getId(*(this+i),id) &&
+               !movie_getTitulo(*(this+i),titulo) && !movie_getGenero(*(this+i),genero) &&
+               !movie_getDuracion(*(this+i),&duracion) && !movie_getDescripcion(*(this+i),descripcion) &&
+               !movie_getPuntaje(*(this+i),&puntaje) && !movie_getLinkImagen(*(this+i),linkImagen))
             {
-                printf("\nTitulo: %s - Genero: %s \nDuracion: %d - Puntaje: %.1f \nDescripcion: %s\nLink Imagen: %s\n",titulo,genero,duracion,puntaje,descripcion,linkImagen);
-                printf("------------------------------------------------");
+                printf("\nID: %d - Titulo: %s - Genero: %s \nDuracion: %d - Puntaje: %.1f \nDescripcion: %s\nLink Imagen: %s\n",id,titulo,genero,duracion,puntaje,descripcion,linkImagen);
             }
         }
         return 0;
@@ -244,19 +177,40 @@ int movie_mostrar(EMovie** this, int cantActual)
     return -1;
 }
 
-
-int movie_getByTitulo(EMovie** this, int cantActual, char* titulo)
+int movie_baja(EMovie** this, int cantidadActual, int id)
 {
     int i;
-    char auxTitulo[4096];
     if(this != NULL)
     {
-        for(i=0; i<cantActual; i++)
+        i = movie_getById(this, cantidadActual, id);
+        if(i != -1)
+        {
+            *(this + i) = NULL;
+            movie_escribirArchivo(this, cantidadActual);
+            printf("\nPelicula eliminada correctamente\n");
+            return 0;
+        }
+        else
+        {
+            printf("\nLa película que quiere eliminar no existe\n");
+            return -2;
+        }
+    }
+    return -1;
+}
+
+int movie_getById(EMovie** this, int cantidadActual, int id)
+{
+    int i;
+    int auxId = 0;
+    if(this != NULL)
+    {
+        for(i=0; i<cantidadActual; i++)
         {
             if(*(this+i) != NULL)
             {
-                movie_getTitulo(*(this+i),auxTitulo);
-                if(!strcmp(auxTitulo,titulo))
+                movie_getId(*(this+i),auxId);
+                if(auxId == id)
                     return i;
             }
         }
@@ -264,8 +218,55 @@ int movie_getByTitulo(EMovie** this, int cantActual, char* titulo)
     return -1;
 }
 
+int movie_modificacion(EMovie** this, int cantidadActual, int id)
+{
+    int i;
+    char titulo[4096];
+    char genero[4096];
+    int duracion;
+    char descripcion[4096];
+    float puntaje;
+    char linkImagen[4096];
+    if(this != NULL)
+    {
+        i = movie_getById(this, cantidadActual, id);
+        if(i != -1)
+        {
+            if(!getValidStringAlfaNumerico("\nTitulo: ","\nNo es un titulo válido","\nEl titulo supera la cantidad de caracteres",titulo,50,1) &&
+            !getValidString("\nGenero: ","\nNo es un genero valido","\nNo se acepta esa cantidad de caracteres",genero,21,1) &&
+            !getValidInt("\nDuracion: ","\nNo es una duracion valida[10-1000]",&duracion,10,1000,1) &&
+            !getValidDescripcion("\nDescripcion: ","\nNo es una descripcion valida",descripcion,750,1) &&
+            !getValidFloat("\nPuntaje[1-10]: ","\nNo es un puntaje valido",&puntaje,1,10,1) &&
+            !getValidLink("\nLink foto: ","\nNo es un link valido","\nEl link tiene una extension que supera la permitida",linkImagen,300,1))
+            {
+                if( !movie_setTitulo(*(this + i), titulo) &&
+                !movie_setGenero(*(this + i), genero) &&
+                !movie_setDuracion(*(this + i), duracion) &&
+                !movie_setDescripcion(*(this + i), descripcion) &&
+                !movie_setPuntaje(*(this + i), puntaje) &&
+                !movie_setLinkImagen(*(this + i), linkImagen))
+                {
+                    movie_escribirArchivo(this, cantidadActual);
+                    printf("\nPelicula modificada correctamente\n");
+                    return 0;
+                }
+            }
+            else
+            {
+                printf("\nError, datos ingresados de manera erronea\n");
+                return -2;
+            }
+        }
+        else
+        {
+            printf("\nError\n");
+            return -2;
+        }
+    }
+    return -1;
+}
 
-int movie_generateIndex(EMovie** this,int cantActual)
+int movie_generarPagina(EMovie** this,int cantidadActual)
 {
     int i;
     char titulo[4096];
@@ -275,10 +276,13 @@ int movie_generateIndex(EMovie** this,int cantActual)
     float puntaje;
     char linkImagen[4096];
     FILE *pFile;
-    if((pFile=fopen("template/index.html","w")) != NULL && this != NULL)
+    pFile=fopen("template/index.html","w");
+
+    if(pFile!= NULL && this != NULL)
     {
         fprintf(pFile,"<!DOCTYPE html><!-- Template by Quackit.com --><html lang='en'><head><meta charset='utf-8'><meta http-equiv='X-UA-Compatible' content='IE=edge'><meta name='viewport' content='width=device-width, initial-scale=1'><!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags --><title>Lista peliculas</title><!-- Bootstrap Core CSS --><link href='css/bootstrap.min.css' rel='stylesheet'><!-- Custom CSS: You can use this stylesheet to override any Bootstrap styles and/or apply your own styles --><link href='css/custom.css' rel='stylesheet'><!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries --><!-- WARNING: Respond.js doesn't work if you view the page via file:// --><!--[if lt IE 9]><script src='https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js'></script><script src='https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js'></script><![endif]--></head><body><div class='container'><div class='row'>");
-            for(i=0; i<cantActual; i++)
+
+            for(i=0; i<cantidadActual; i++)
             {
                 if((*(this+i))!=NULL &&
                 !movie_getTitulo(*(this+i),titulo) &&
@@ -291,17 +295,49 @@ int movie_generateIndex(EMovie** this,int cantActual)
                     fprintf(pFile,"<!-- Repetir esto para cada pelicula --><article class='col-md-4 article-intro'><a href='#'><img class='img-responsive img-rounded' src='%s' alt=''></a><h3><a href='#'>%s</a></h3><ul><li>Género:%s</li><li>Puntaje:%.1f</li><li>Duración:%d</li></ul><p>%s</p></article><!-- Repetir esto para cada pelicula -->",linkImagen,titulo,genero,puntaje,duracion,descripcion);
                 }
             }
+
         fprintf(pFile,"</div><!-- /.row --></div><!-- /.container --><!-- jQuery --><script src='js/jquery-1.11.3.min.js'></script><!-- Bootstrap Core JavaScript --><script src='js/bootstrap.min.js'></script><!-- IE10 viewport bug workaround --><script src='js/ie10-viewport-bug-workaround.js'></script><!-- Placeholder Images --><script src='js/holder.min.js'></script></body></html>");
         fclose(pFile);
-        printf("\nPagina Generada\n");
+        printf("\nLa pagina fue generada correctamente\n");
         return 0;
     }
     return -1;
 }
 
-
 //Setters y getters
+int movie_setId(EMovie* this, int id)
+{
+    int retorno = -1;
+    static int ultimoId = -1;
+    if(this != NULL)
+    {
+        if(id == -1)
+        {
+            ultimoId++;
+            this->id = ultimoId;
+            retorno = 0;
+        }
+        if(id > ultimoId)
+        {
+            this->id = id;
+            ultimoId = id;
+            retorno = 0;
+        }
+    }
+    return retorno;
+}
 
+
+int movie_getId(EMovie* this, int* id)
+{
+    int retorno = -1;
+    if(this != NULL && id != NULL)
+    {
+        retorno = 0;
+        *id = this->id;
+    }
+    return retorno;
+}
 
 int movie_setTitulo(EMovie* this, char* titulo)
 {
@@ -446,10 +482,7 @@ int movie_getLinkImagen(EMovie* this, char* linkImagen)
     return retorno;
 }
 
-
 //VALIDACIONES
-
-
 static int isValidTitulo(char* titulo)
 {
     int i = 0;
@@ -457,7 +490,7 @@ static int isValidTitulo(char* titulo)
     {
         while(titulo[i] != '\0')
         {
-            if((titulo[i] == ',') || (titulo[i] == '.'))
+            if((titulo[i] == '.'))
                 return -1;
             i++;
         }
@@ -509,7 +542,7 @@ static int isValidPuntaje(float puntaje)
 static int isValidLinkImagen(char* linkImagen)
 {
     int i = 0;
-    if(strlen(linkImagen) < 300)
+    if(strlen(linkImagen) < 400)
     {
         while(linkImagen[i] != '\0')
         {
