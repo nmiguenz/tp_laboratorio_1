@@ -29,12 +29,9 @@ int movie_delete(EMovie* this)
     return -1;
 }
 
-EMovie* movie_newParameters(char* stringId, char* titulo, char* genero, int duracion, char* descripcion, float puntaje, char* linkImagen)
+EMovie* movie_newParameters(int id, char* titulo, char* genero, int duracion, char* descripcion, float puntaje, char* linkImagen)
 {
-    int id;
     EMovie* this = movie_new();
-
-    id = atoi(stringId);
 
     if( !movie_setId(this, id) &&
         !movie_setTitulo(this, titulo) &&
@@ -115,7 +112,6 @@ int movie_read(EMovie** this, int* cantidadActual, int cantidadMaxima)
 
 int movie_alta(EMovie** this, int* cantidadActual, int cantidadMaxima)
 {
-    int id;
     char titulo[4096];
     char genero[4096];
     int duracion;
@@ -132,7 +128,7 @@ int movie_alta(EMovie** this, int* cantidadActual, int cantidadMaxima)
             !getValidLink("\nLink foto: ","\nNo es un link valido","\nEl link tiene una extension que supera la permitida",linkImagen,300,1))
         {
 
-            *(this + (*cantidadActual)) = movie_newParameters(id,titulo,genero,duracion,descripcion,puntaje,linkImagen);
+            *(this + (*cantidadActual)) = movie_newParameters(-1,titulo,genero,duracion,descripcion,puntaje,linkImagen);
             movie_guardar(*(this + (*cantidadActual)));
 
             (*cantidadActual)++;
@@ -164,7 +160,7 @@ int movie_mostrar(EMovie** this, int cantidadActual)
     {
         for(i=0; i<cantidadActual; i++)
         {
-            if((*(this+i))!=NULL && !movie_getId(*(this+i),id) &&
+            if((*(this+i))!=NULL && !movie_getId(*(this+i),&id) &&
                !movie_getTitulo(*(this+i),titulo) && !movie_getGenero(*(this+i),genero) &&
                !movie_getDuracion(*(this+i),&duracion) && !movie_getDescripcion(*(this+i),descripcion) &&
                !movie_getPuntaje(*(this+i),&puntaje) && !movie_getLinkImagen(*(this+i),linkImagen))
@@ -209,7 +205,7 @@ int movie_getById(EMovie** this, int cantidadActual, int id)
         {
             if(*(this+i) != NULL)
             {
-                movie_getId(*(this+i),auxId);
+                movie_getId(*(this+i),&auxId);
                 if(auxId == id)
                     return i;
             }

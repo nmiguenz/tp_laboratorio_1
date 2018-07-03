@@ -5,7 +5,6 @@
 
 #define CANT_MAX 200
 
-
 int main()
 {
     int opcion=0;

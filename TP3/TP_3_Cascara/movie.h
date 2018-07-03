@@ -27,7 +27,7 @@ EMovie* movie_new(void);
  * \param linkImagen Es el link de la imagen de la pelicula a setear
  * \return EMovie* [NULL] error, retorna puntero al nuevo arrayList si ok
  */
-EMovie* movie_newParameters(char* stringId, char* titulo, char* genero, int duracion, char* descripcion, float puntaje, char* linkImagen);
+EMovie* movie_newParameters(int id, char* titulo, char* genero, int duracion, char* descripcion, float puntaje, char* linkImagen);
 
 /** \brief Libera un espacio de memoria
  * \param this Puntero al espacio de memoria que se desea eliminar
