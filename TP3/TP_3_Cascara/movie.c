@@ -165,7 +165,7 @@ int movie_mostrar(EMovie** this, int cantidadActual)
                !movie_getDuracion(*(this+i),&duracion) && !movie_getDescripcion(*(this+i),descripcion) &&
                !movie_getPuntaje(*(this+i),&puntaje) && !movie_getLinkImagen(*(this+i),linkImagen))
             {
-                printf("\nID: %d - Titulo: %s - Genero: %s \nDuracion: %d - Puntaje: %.1f \nDescripcion: %s\nLink Imagen: %s\n",id,titulo,genero,duracion,puntaje,descripcion,linkImagen);
+                printf("\nID: %d  \nTitulo: %s \nGenero: %s \nDuracion: %d \nPuntaje: %.1f \nDescripcion: %s\n\nLink Imagen: %s\n",id,titulo,genero,duracion,puntaje,descripcion,linkImagen);
             }
         }
         return 0;
