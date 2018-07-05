@@ -14,7 +14,7 @@ int main()
 
     do
     {
-        printf("1- Agregar pelicula\n");
+        printf("\n1- Agregar pelicula\n");
         printf("2- Borrar pelicula\n");
         printf("3- Modificar pelicula\n");
         printf("4- Generar pagina web\n");

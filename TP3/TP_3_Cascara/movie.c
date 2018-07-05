@@ -50,7 +50,7 @@ EMovie* movie_newParameters(int id, char* titulo, char* genero, int duracion, ch
 int movie_guardar(EMovie* this)
 {
     FILE *pFile;
-    pFile=fopen("movies.dat","ab");
+    pFile=fopen("movie.dat","ab");
 
     if(pFile != NULL && this != NULL)
     {
@@ -65,7 +65,7 @@ int movie_escribirArchivo(EMovie** this, int cantidadActual)
 {
     int i;
     FILE *pFile;
-    pFile=fopen("movies.dat","wb");
+    pFile=fopen("movie.dat","wb");
 
     if(pFile != NULL && this != NULL)
     {
@@ -87,7 +87,7 @@ int movie_read(EMovie** this, int* cantidadActual, int cantidadMaxima)
     int r, i=0;
     *cantidadActual=0;
     FILE* pFile;
-    pFile=fopen("movies.dat","rb");
+    pFile=fopen("movie.dat","rb");
 
     if(pFile != NULL && this != NULL)
     {
@@ -118,6 +118,7 @@ int movie_alta(EMovie** this, int* cantidadActual, int cantidadMaxima)
     char descripcion[4096];
     float puntaje;
     char linkImagen[4096];
+
     if((*cantidadActual) < cantidadMaxima && this != NULL)
     {
         if( !getValidStringAlfaNumerico("\nTitulo: ","\nNo es un titulo válido","\nEl titulo supera la cantidad de caracteres",titulo,50,1) &&
@@ -165,7 +166,7 @@ int movie_mostrar(EMovie** this, int cantidadActual)
                !movie_getDuracion(*(this+i),&duracion) && !movie_getDescripcion(*(this+i),descripcion) &&
                !movie_getPuntaje(*(this+i),&puntaje) && !movie_getLinkImagen(*(this+i),linkImagen))
             {
-                printf("\nID: %d  \nTitulo: %s \nGenero: %s \nDuracion: %d \nPuntaje: %.1f \nDescripcion: %s\n\nLink Imagen: %s\n",id,titulo,genero,duracion,puntaje,descripcion,linkImagen);
+                printf("\nID: %d  \nTitulo: %s \nGenero: %s \nDuracion: %d \nPuntaje: %.1f \nDescripcion: %s\nLink Imagen: %s\n",id,titulo,genero,duracion,puntaje,descripcion,linkImagen);
             }
         }
         return 0;
@@ -288,7 +289,7 @@ int movie_generarPagina(EMovie** this,int cantidadActual)
                 !movie_getPuntaje(*(this+i),&puntaje) &&
                 !movie_getLinkImagen(*(this+i),linkImagen))
                 {
-                    fprintf(pFile,"<!-- Repetir esto para cada pelicula --><article class='col-md-4 article-intro'><a href='#'><img class='img-responsive img-rounded' src='%s' alt=''></a><h3><a href='#'>%s</a></h3><ul><li>Género:%s</li><li>Puntaje:%.1f</li><li>Duración:%d</li></ul><p>%s</p></article><!-- Repetir esto para cada pelicula -->",linkImagen,titulo,genero,puntaje,duracion,descripcion);
+                    fprintf(pFile,"<!-- Repetir esto para cada pelicula --><article class='col-md-4 article-intro'><a href='#'><img class='img-responsive img-rounded' src='%s' alt=''></a><h3><a href='#'>%s</a></h3><ul><li>Género: %s</li><li>Puntaje: %.1f</li><li>Duración: %d</li></ul><p>%s</p></article><!-- Repetir esto para cada pelicula -->",linkImagen,titulo,genero,puntaje,duracion,descripcion);
                 }
             }
 
@@ -542,7 +543,7 @@ static int isValidLinkImagen(char* linkImagen)
     {
         while(linkImagen[i] != '\0')
         {
-            if(linkImagen[i] == ' ')
+            if(linkImagen[i] == ' ' && linkImagen[i] !='.')
                 return -1;
             i++;
         }
